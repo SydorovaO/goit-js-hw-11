@@ -56,6 +56,7 @@ function createMarkup(arr) {
     .map(
       ({ tags, webformatURL, likes, views, comments, downloads }) => `
       <div class="photo-card">
+      <a class="gallery__link" href="large-image.jpg">
       <img src="${webformatURL}" alt="${tags}" loading="lazy" width=350 height=197 />
       <div class="info">
         <p class="info-item">
@@ -71,6 +72,7 @@ function createMarkup(arr) {
           <b class="info-desc"><span >Downloads</span> <span>${downloads}</span></b>
         </p>
       </div>
+      </a>
     </div>
           `
     )
