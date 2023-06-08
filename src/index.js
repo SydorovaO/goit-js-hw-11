@@ -45,19 +45,19 @@ function createMarkup({
 }) {
   return `
     <div class="photo-card">
-    <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+    <img src="${webformatURL}" alt="${tags}" loading="lazy" width=350 height=197 />
     <div class="info">
       <p class="info-item">
-        <b>Likes ${likes}</b>
+        <b class="info-desc"><span >Likes</span> <span>${likes}</span></b>
       </p>
       <p class="info-item">
-        <b>Views ${views}</b>
+        <b class="info-desc"><span >Views</span> <span >${views}</span></b>
       </p>
       <p class="info-item">
-        <b>Comments ${comments}</b>
+        <b class="info-desc"><span >Comments</span> <span>${comments}</span></b>
       </p>
       <p class="info-item">
-        <b>Downloads ${downloads}</b>
+        <b class="info-desc"><span >Downloads</span> <span>${downloads}</span></b>
       </p>
     </div>
   </div>
