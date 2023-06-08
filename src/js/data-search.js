@@ -8,7 +8,7 @@ export default class SearchAPIService {
   }
 
   fetchInfo() {
-    const url = `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=5`;
+    const url = `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=4`;
     return fetch(url)
       .then(res => res.json())
       .then(data => {
@@ -28,13 +28,4 @@ export default class SearchAPIService {
   set query(newQuery) {
     this.searchQuery = newQuery;
   }
-  //   getImg(query) {
-  //     const url = `${BASE_URL}?key=${API_KEY}&q=${query}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=40`;
-  //     return fetch(url)
-  //       .then(res => res.json())
-  //       .then(data => {
-  //         this.incrementPage();
-  //         return data;
-  //       });
-  //   }}
 }
