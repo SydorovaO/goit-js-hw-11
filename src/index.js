@@ -40,11 +40,12 @@ function appendImages() {
   loadMoreBtn.disable();
   searchAPIService
     .fetchImages()
-    .then(hits => {
+    .then(function (hits) {
       console.log(hits);
       refs.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
       loadMoreBtn.enable();
     })
+
     .catch(onError)
     .finally(() => {
       refs.form.reset();
