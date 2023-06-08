@@ -7,13 +7,13 @@ export default class SearchAPIService {
     this.searchQuery = '';
   }
 
-  fetchInfo() {
-    const url = `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=4`;
+  fetchImages() {
+    const url = `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=100`;
     return fetch(url)
       .then(res => res.json())
-      .then(data => {
+      .then(({ hits }) => {
         this.incrementPage();
-        return data.hits;
+        return hits;
       });
   }
   incrementPage() {

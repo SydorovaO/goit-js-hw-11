@@ -1,8 +1,13 @@
 import axios from 'axios';
 
-import SearchAPIService from './js/data-search';
-const searchAPIService = new SearchAPIService();
+import SearchAPIService from './js/img-search';
+import LoadMoreBtn from './components/loadMoreBtn';
 
+const searchAPIService = new SearchAPIService();
+const loadMoreBtn = new LoadMoreBtn({
+  selector: '.load-more',
+  isHidden: true,
+});
 const refs = {
   form: document.querySelector('#search-form'),
   gallery: document.querySelector('.gallery'),
@@ -11,16 +16,38 @@ const refs = {
 
 refs.form.addEventListener('submit', onSubmit);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
-let inputValue = '';
+// let inputValue = '';
 
 function onSubmit(e) {
   e.preventDefault();
-  searchAPIService.query = refs.form.elements.searchQuery.value;
+  loadMoreBtn.show();
+  searchAPIService.query = refs.form.elements.searchQuery.value.trim();
+  if (searchAPIService.query === '') {
+    alert('Empty query!');
+    return;
+  }
+  clearNewsList();
   searchAPIService.resetPage();
   appendImages();
 }
+
 function onLoadMore() {
   appendImages();
+}
+
+function appendImages() {
+  loadMoreBtn.disable();
+  searchAPIService
+    .fetchImages()
+    .then(hits => {
+      console.log(hits);
+      refs.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
+      loadMoreBtn.enable();
+    })
+    .catch(onError)
+    .finally(() => {
+      refs.form.reset();
+    });
 }
 
 function createMarkup(arr) {
@@ -48,13 +75,14 @@ function createMarkup(arr) {
     )
     .join('');
 }
-function appendImages() {
-  searchAPIService.fetchInfo().then(hits => {
-    console.log(hits);
-    refs.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
-  });
-}
 
+function clearNewsList() {
+  refs.gallery.innerHTML = '';
+}
+function onError(err) {
+  console.error(err);
+  createMarkup(`<p>${err.message}</p>`);
+}
 // axios.get('/users')
 //   .then(res => {
 //     console.log(res.data);

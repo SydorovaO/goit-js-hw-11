@@ -13,3 +13,10 @@
   flex-direction: column;
   align-items: center;
 }
+button:disabled {
+  background-color: #c1c1c1;
+  cursor: not-allowed;
+}
+button.hidden {
+  display: none;
+}
