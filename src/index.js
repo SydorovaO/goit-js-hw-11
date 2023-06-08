@@ -1,4 +1,5 @@
 import axios from 'axios';
+import SimpleLightbox from 'simplelightbox';
 
 import SearchAPIService from './js/img-search';
 import LoadMoreBtn from './components/loadMoreBtn';
@@ -15,7 +16,7 @@ const refs = {
 };
 
 refs.form.addEventListener('submit', onSubmit);
-refs.loadMoreBtn.addEventListener('click', onLoadMore);
+refs.loadMoreBtn.addEventListener('click', appendImages);
 // let inputValue = '';
 
 function onSubmit(e) {
@@ -31,9 +32,9 @@ function onSubmit(e) {
   appendImages();
 }
 
-function onLoadMore() {
-  appendImages();
-}
+// function onLoadMore() {
+//   appendImages();
+// }
 
 function appendImages() {
   loadMoreBtn.disable();

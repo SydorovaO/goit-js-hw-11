@@ -8,7 +8,7 @@ export default class SearchAPIService {
   }
 
   fetchImages() {
-    const url = `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=100`;
+    const url = `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=20`;
     return fetch(url)
       .then(res => res.json())
       .then(({ hits }) => {
