@@ -1,0 +1,2 @@
+.gallery{flex-wrap:wrap;gap:30px;display:flex}.info{justify-content:space-around;display:flex}.info-desc{flex-direction:column;align-items:center;display:flex}button:disabled{cursor:not-allowed;background-color:#c1c1c1}button.hidden{display:none}
+/*# sourceMappingURL=index.bba868f3.css.map */
