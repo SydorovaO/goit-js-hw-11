@@ -40,32 +40,33 @@ refs.loadMoreBtn.addEventListener('click', appendImages);
 async function appendImages() {
   loadMoreBtn.disable();
   console.log(imagesAPIService.page);
-  try {
-    const result = await imagesAPIService.getImages().then(hits => {
-      if (hits.length === 0) {
-        console.log(hits);
-        alert(
-          '"Sorry, there are no images matching your search query. Please try again."'
-        );
-        return;
-      }
-      console.log(hits);
-      refs.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
-      loadMoreBtn.enable();
-    });
-  } catch (error) {
-    console.log('!!!!!!!!!!!!!!!!error');
-  }
 
+  try {
+    const result = await imagesAPIService.getImages();
+    const { hits, totalHits } = result;
+    if (hits.length === 0) {
+      console.log(hits);
+      alert(
+        '"Sorry, there are no images matching your search query. Please try again."'
+      );
+      return;
+    }
+    console.log(hits);
+    refs.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
+    loadMoreBtn.enable();
+  } catch (err) {
+    onError(err);
+  }
   refs.form.reset();
 }
 
 function onSubmit(e) {
   e.preventDefault();
   loadMoreBtn.show();
-  imagesAPIService.query = refs.form.elements.searchQuery.value.trim();
-  if (imagesAPIService.query === '') {
+  const inputValue = refs.form.elements.searchQuery.value.trim();
+  if (inputValue === '') {
     alert('Empty query!');
+    loadMoreBtn.hide();
     return;
   }
   clearNewsList();
