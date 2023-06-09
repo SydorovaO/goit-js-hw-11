@@ -2,10 +2,10 @@ import axios from 'axios';
 import SimpleLightbox from 'simplelightbox';
 import Notiflix from 'notiflix';
 
-import SearchAPIService from './js/img-search';
+import ImagesAPIService from './js/ImagesAPIService';
 import LoadMoreBtn from './components/loadMoreBtn';
 
-const searchAPIService = new SearchAPIService();
+const imagesAPIService = new ImagesAPIService();
 const loadMoreBtn = new LoadMoreBtn({
   selector: '.load-more',
   isHidden: true,
@@ -39,9 +39,9 @@ refs.loadMoreBtn.addEventListener('click', appendImages);
 
 async function appendImages() {
   loadMoreBtn.disable();
-  console.log(searchAPIService.page);
+  console.log(imagesAPIService.page);
   try {
-    const result = await searchAPIService.fetchImages().then(hits => {
+    const result = await imagesAPIService.getImages().then(hits => {
       if (hits.length === 0) {
         console.log(hits);
         alert(
@@ -63,13 +63,13 @@ async function appendImages() {
 function onSubmit(e) {
   e.preventDefault();
   loadMoreBtn.show();
-  searchAPIService.query = refs.form.elements.searchQuery.value.trim();
-  if (searchAPIService.query === '') {
+  imagesAPIService.query = refs.form.elements.searchQuery.value.trim();
+  if (imagesAPIService.query === '') {
     alert('Empty query!');
     return;
   }
   clearNewsList();
-  searchAPIService.resetPage();
+  imagesAPIService.resetPage();
   appendImages();
 }
 
