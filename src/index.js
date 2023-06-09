@@ -42,12 +42,19 @@ async function appendImages() {
 
   try {
     const result = await searchAPIService.fetchImages().then(hits => {
+      if (hits.length === 0) {
+        console.log(hits);
+        alert(
+          '"Sorry, there are no images matching your search query. Please try again."'
+        );
+        return;
+      }
       console.log(hits);
       refs.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
       loadMoreBtn.enable();
     });
-  } catch {
-    onError;
+  } catch (error) {
+    console.log('!!!!!!!!!!!!!!!!error');
   }
 
   refs.form.reset();
@@ -106,3 +113,5 @@ function onError(err) {
   console.error(err);
   createMarkup(`<p>${err.message}</p>`);
 }
+
+function noData() {}
