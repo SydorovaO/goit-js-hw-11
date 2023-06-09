@@ -39,7 +39,7 @@ refs.loadMoreBtn.addEventListener('click', appendImages);
 
 async function appendImages() {
   loadMoreBtn.disable();
-
+  console.log(searchAPIService.page);
   try {
     const result = await searchAPIService.fetchImages().then(hits => {
       if (hits.length === 0) {
