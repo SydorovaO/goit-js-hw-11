@@ -9,7 +9,7 @@ export default class ImagesAPIService {
   }
 
   // fetchImages() {
-  //   const url = `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=20`;
+  //   const url = `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=100`;
   //   return axios.get(url).then(response => {
   //     const { hits } = response.data;
   //     this.incrementPage();
@@ -17,9 +17,10 @@ export default class ImagesAPIService {
   //   });
   // }
   async getImages() {
-    const url = `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=20`;
+    const url = `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=100`;
 
     const response = await axios.get(url);
+    this.incrementPage();
     console.log(response.data);
     return response.data;
   }

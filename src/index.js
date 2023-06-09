@@ -40,10 +40,14 @@ refs.loadMoreBtn.addEventListener('click', appendImages);
 async function appendImages() {
   loadMoreBtn.disable();
   console.log(imagesAPIService.page);
-
   try {
-    const result = await imagesAPIService.getImages();
-    const { hits, totalHits } = result;
+    const { hits, totalHits } = await imagesAPIService.getImages();
+    const nextPage = imagesAPIService.page;
+    const maxPage = Math.ceil(totalHits / 100);
+    console.log(maxPage);
+    if (nextPage > maxPage) {
+      loadMoreBtn.hide();
+    }
     if (hits.length === 0) {
       console.log(hits);
       alert(
@@ -68,6 +72,7 @@ function onSubmit(e) {
     loadMoreBtn.hide();
     return;
   }
+
   clearNewsList();
   loadMoreBtn.show();
   imagesAPIService.resetPage();
