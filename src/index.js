@@ -57,12 +57,11 @@ async function appendImages() {
   } catch (err) {
     onError(err);
   }
-  refs.form.reset();
 }
 
 function onSubmit(e) {
   e.preventDefault();
-  loadMoreBtn.show();
+
   const inputValue = refs.form.elements.searchQuery.value.trim();
   if (inputValue === '') {
     alert('Empty query!');
@@ -70,14 +69,12 @@ function onSubmit(e) {
     return;
   }
   clearNewsList();
+  loadMoreBtn.show();
   imagesAPIService.resetPage();
-  appendImages();
+  appendImages()
+    .catch(onError)
+    .finally(() => refs.form.reset());
 }
-
-// function onLoadMore() {
-//   appendImages();
-// }
-// pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp
 
 function createMarkup(arr) {
   return arr
@@ -112,7 +109,6 @@ function clearNewsList() {
 }
 function onError(err) {
   console.error(err);
-  createMarkup(`<p>${err.message}</p>`);
+  clearNewsList();
+  loadMoreBtn.hide();
 }
-
-function noData() {}

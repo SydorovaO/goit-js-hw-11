@@ -30,10 +30,8 @@ export default class ImagesAPIService {
   resetPage() {
     this.page = 1;
   }
-  get query() {
-    return this.searchQuery;
-  }
-  set query(newQuery) {
+
+  setQuery(newQuery) {
     this.searchQuery = newQuery;
   }
 }
