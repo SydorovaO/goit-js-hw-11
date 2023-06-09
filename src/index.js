@@ -40,7 +40,7 @@ async function appendImages() {
   loadMoreBtn.disable();
 
   try {
-    searchAPIService.fetchImages().then(hits => {
+    const result = await searchAPIService.fetchImages().then(hits => {
       console.log(hits);
       refs.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
       loadMoreBtn.enable();
