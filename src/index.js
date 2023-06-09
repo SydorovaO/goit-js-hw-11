@@ -1,5 +1,6 @@
 import axios from 'axios';
 import SimpleLightbox from 'simplelightbox';
+import Notiflix from 'notiflix';
 
 import SearchAPIService from './js/img-search';
 import LoadMoreBtn from './components/loadMoreBtn';
