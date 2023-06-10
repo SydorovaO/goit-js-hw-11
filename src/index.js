@@ -17,10 +17,9 @@ const refs = {
 };
 
 refs.form.addEventListener('submit', onSubmit);
-refs.loadMoreBtn.addEventListener('click', appendImages);
+refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
 async function appendImages() {
-  loadMoreBtn.disable();
   const currentPage = imagesAPIService.page;
   console.log(currentPage);
   try {
@@ -38,15 +37,18 @@ async function appendImages() {
     if (nextPage > maxPage) {
       loadMoreBtn.hide();
     }
-
     console.log(hits);
-
     refs.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
     smoothScrollToNextCards();
-    loadMoreBtn.enable();
   } catch (err) {
     onError(err);
   }
+  loadMoreBtn.enable();
+}
+
+function onLoadMore() {
+  loadMoreBtn.disable();
+  appendImages();
 }
 
 function onSubmit(e) {
