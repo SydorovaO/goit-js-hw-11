@@ -39,14 +39,17 @@ refs.loadMoreBtn.addEventListener('click', appendImages);
 
 async function appendImages() {
   loadMoreBtn.disable();
-  console.log(imagesAPIService.page);
+  const currentPage = imagesAPIService.page;
+  console.log(currentPage);
   try {
     const { hits, totalHits } = await imagesAPIService.getImages();
 
-    hits.length === 0
-      ? onInvalidInput()
-      : Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
-
+    if (hits.length === 0) {
+      onInvalidInput();
+    }
+    if (currentPage === 1) {
+      Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+    }
     const nextPage = imagesAPIService.page;
     const maxPage = Math.ceil(totalHits / 100);
     console.log(maxPage);
