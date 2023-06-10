@@ -18,24 +18,6 @@ const refs = {
 
 refs.form.addEventListener('submit', onSubmit);
 refs.loadMoreBtn.addEventListener('click', appendImages);
-// let inputValue = '';
-
-// function appendImages() {
-//   loadMoreBtn.disable();
-
-//   searchAPIService
-//     .fetchImages()
-//     .then(hits => {
-//       console.log(hits);
-//       refs.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
-//       loadMoreBtn.enable();
-//     })
-
-//     .catch(onError)
-//     .finally(() => {
-//       refs.form.reset();
-//     });
-// }
 
 async function appendImages() {
   loadMoreBtn.disable();
@@ -60,6 +42,7 @@ async function appendImages() {
     console.log(hits);
 
     refs.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
+    smoothScrollToNextCards();
     loadMoreBtn.enable();
   } catch (err) {
     onError(err);
@@ -128,11 +111,22 @@ function onInvalidInput() {
   );
   return;
 }
-// -----------scroll---------------------------------------------------------- //
-window.addEventListener('scroll', handleScroll);
-function handleScroll() {
-  const { clientHeight, scrollTop, scrollHeight } = document.documentElement;
-  if (scrollTop + clientHeight >= scrollHeight - 5) {
-    appendImages();
-  }
+
+function smoothScrollToNextCards() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
 }
+// -----------scroll---------------------------------------------------------- //
+// window.addEventListener('scroll', handleScroll);
+// function handleScroll() {
+//   const { clientHeight, scrollTop, scrollHeight } = document.documentElement;
+//   if (scrollTop + clientHeight >= scrollHeight - 5) {
+//     appendImages();
+//   }
+// }
