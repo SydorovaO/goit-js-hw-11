@@ -66,8 +66,8 @@ async function appendImages() {
 function onSubmit(e) {
   e.preventDefault();
 
-  const inputValue = refs.form.elements.searchQuery.value.trim();
-  if (inputValue === '') {
+  imagesAPIService.query = refs.form.elements.searchQuery.value.trim();
+  if (imagesAPIService.query === '') {
     alert('Empty query!');
     loadMoreBtn.hide();
     return;
