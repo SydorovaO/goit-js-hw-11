@@ -65,16 +65,16 @@ async function appendImages() {
 
 function onSubmit(e) {
   e.preventDefault();
+  const inputValue = refs.form.elements.searchQuery.value.trim();
 
-  imagesAPIService.query = refs.form.elements.searchQuery.value.trim();
-  if (imagesAPIService.query === '') {
+  if (inputValue === '') {
     alert('Empty query!');
-    loadMoreBtn.hide();
     return;
   }
-
   clearNewsList();
+  imagesAPIService.setSearchValue(inputValue);
   loadMoreBtn.show();
+
   imagesAPIService.resetPage();
   appendImages()
     .catch(onError)
