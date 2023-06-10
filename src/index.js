@@ -1,5 +1,6 @@
 import axios from 'axios';
 import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
 
 import ImagesAPIService from './js/ImagesAPIService';
@@ -13,11 +14,12 @@ const loadMoreBtn = new LoadMoreBtn({
 const refs = {
   form: document.querySelector('#search-form'),
   gallery: document.querySelector('.gallery'),
-  loadMoreBtn: document.querySelector('.load-more'),
+  loadMore: document.querySelector('.load-more'),
 };
+const { form, loadMore, gallery } = refs;
 
-refs.form.addEventListener('submit', onSubmit);
-refs.loadMoreBtn.addEventListener('click', onLoadMore);
+form.addEventListener('submit', onSubmit);
+loadMore.addEventListener('click', onLoadMore);
 
 async function appendImages() {
   const currentPage = imagesAPIService.page;
@@ -38,7 +40,7 @@ async function appendImages() {
       loadMoreBtn.hide();
     }
     console.log(hits);
-    refs.gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
+    gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
     smoothScrollToNextCards();
   } catch (err) {
     onError(err);
@@ -49,11 +51,12 @@ async function appendImages() {
 function onLoadMore() {
   loadMoreBtn.disable();
   appendImages();
+  gallery.refresh();
 }
 
 function onSubmit(e) {
   e.preventDefault();
-  const inputValue = refs.form.elements.searchQuery.value.trim();
+  const inputValue = form.elements.searchQuery.value.trim();
 
   if (inputValue === '') {
     Notiflix.Notify.warning('Empty query');
@@ -66,16 +69,26 @@ function onSubmit(e) {
   imagesAPIService.resetPage();
   appendImages()
     .catch(onError)
-    .finally(() => refs.form.reset());
+    .finally(() => form.reset());
 }
 
 function createMarkup(arr) {
   return arr
     .map(
-      ({ tags, webformatURL, likes, views, comments, downloads }) => `
+      ({
+        tags,
+        largeImageURL,
+        webformatURL,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) => `
+      
       <div class="photo-card">
-      <a class="gallery__link" href="large-image.jpg">
+      <a class="gallery__link" href="${largeImageURL}">
       <img src="${webformatURL}" alt="${tags}" loading="lazy" width=350 height=197 />
+      </a>
       <div class="info">
         <p class="info-item">
           <b class="info-desc"><span >Likes</span> <span>${likes}</span></b>
@@ -90,15 +103,16 @@ function createMarkup(arr) {
           <b class="info-desc"><span >Downloads</span> <span>${downloads}</span></b>
         </p>
       </div>
-      </a>
+     
     </div>
+    
           `
     )
     .join('');
 }
 
 function clearNewsList() {
-  refs.gallery.innerHTML = '';
+  gallery.innerHTML = '';
 }
 function onError(err) {
   console.error(' This is err!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
@@ -124,6 +138,11 @@ function smoothScrollToNextCards() {
     behavior: 'smooth',
   });
 }
+
+new SimpleLightbox('.gallery a', {
+  captions: true,
+  captionDelay: 250,
+});
 // -----------scroll---------------------------------------------------------- //
 // window.addEventListener('scroll', handleScroll);
 // function handleScroll() {

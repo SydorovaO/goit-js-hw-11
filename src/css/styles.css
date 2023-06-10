@@ -1,4 +1,4 @@
-.gallery {
+/* .gallery {
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
@@ -12,7 +12,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+} */
+
 button:disabled {
   background-color: #c1c1c1;
   cursor: not-allowed;
