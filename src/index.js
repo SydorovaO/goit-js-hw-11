@@ -128,3 +128,11 @@ function onInvalidInput() {
   );
   return;
 }
+// -----------scroll---------------------------------------------------------- //
+window.addEventListener('scroll', handleScroll);
+function handleScroll() {
+  const { clientHeight, scrollTop, scrollHeight } = document.documentElement;
+  if (scrollTop + clientHeight >= scrollHeight - 5) {
+    appendImages();
+  }
+}
