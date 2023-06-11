@@ -91,7 +91,7 @@ function createMarkup(arr) {
       <a class="gallery__link" href="${largeImageURL}">
       <img src="${webformatURL}" alt="${tags}" loading="lazy"/>
       </a>
-      
+
       <div class="info">
         <p class="info-item">
           <b class="info-desc"><span >Likes</span> <span>${likes}</span></b>
@@ -143,10 +143,10 @@ function smoothScrollToNextCards() {
 }
 
 // -----------scroll---------------------------------------------------------- //
-// window.addEventListener('scroll', handleScroll);
-// function handleScroll() {
-//   const { clientHeight, scrollTop, scrollHeight } = document.documentElement;
-//   if (scrollTop + clientHeight >= scrollHeight - 5) {
-//     appendImages();
-//   }
-// }
+window.addEventListener('scroll', handleScroll);
+function handleScroll() {
+  const { clientHeight, scrollTop, scrollHeight } = document.documentElement;
+  if (scrollTop + clientHeight >= scrollHeight - 5) {
+    appendImages();
+  }
+}
