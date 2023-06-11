@@ -147,10 +147,10 @@ function smoothScrollToNextCards() {
   |           SCROLL
   |============================
 */
-// window.addEventListener('scroll', handleScroll);
-// function handleScroll() {
-//   const { clientHeight, scrollTop, scrollHeight } = document.documentElement;
-//   if (scrollTop + clientHeight >= scrollHeight - 5) {
-//     appendImages();
-//   }
-// }
+window.addEventListener('scroll', handleScroll);
+function handleScroll() {
+  const { clientHeight, scrollTop, scrollHeight } = document.documentElement;
+  if (scrollTop + clientHeight >= scrollHeight - 5) {
+    appendImages();
+  }
+}
