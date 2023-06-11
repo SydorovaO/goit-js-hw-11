@@ -36,3 +36,56 @@ button:disabled {
 button.hidden {
   display: none;
 }
+
+/* .search-form {
+  display: flex;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: aquamarine;
+}
+input[name='searchQuery'] {
+  position: relative;
+}
+button[type='submit'] {
+  position: absolute;
+} */
+/* .search-form {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: aquamarine;
+  display: inline-flex;
+}
+
+.search-form input {
+}
+
+.search-form button {
+  position: absolute;
+  right: 0;
+  top: 0;
+} */
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgb(87, 83, 158);
+}
+.search-form input {
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.search-form button {
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 4px;
+}

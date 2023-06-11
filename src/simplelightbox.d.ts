@@ -1,1 +1,1 @@
-// declare module 'simplelightbox';
+declare module 'simplelightbox';
