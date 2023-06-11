@@ -2,6 +2,7 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
 import ImagesAPIService from './js/ImagesAPIService';
+import createMarkup from './js/CreateMarkup';
 import LoadMoreBtn from './components/loadMoreBtn';
 
 const imagesAPIService = new ImagesAPIService();
@@ -29,6 +30,11 @@ form.addEventListener('submit', onSubmit);
 loadMoreBtn.button.addEventListener('click', onLoadMore);
 
 let lightbox;
+/**
+  |============================
+  | function appendImages
+  |============================
+*/
 async function appendImages() {
   const currentPage = imagesAPIService.page;
 
@@ -60,11 +66,22 @@ async function appendImages() {
   loadMoreBtn.enable();
 }
 
+/**
+  |============================
+  | function onLoadMore
+  |============================
+*/
 function onLoadMore() {
   loadMoreBtn.disable();
   appendImages();
   lightbox.refresh();
 }
+
+/**
+  |============================
+  | function onSubmit
+  |============================
+*/
 
 function onSubmit(e) {
   e.preventDefault();
@@ -84,45 +101,11 @@ function onSubmit(e) {
     .catch(onError)
     .finally(() => form.reset());
 }
-
-function createMarkup(arr) {
-  return arr
-    .map(
-      ({
-        tags,
-        largeImageURL,
-        webformatURL,
-        likes,
-        views,
-        comments,
-        downloads,
-      }) => `
-      
-      <div class="photo-card">
-      <a class="gallery__link" href="${largeImageURL}">
-      <img src="${webformatURL}" alt="${tags}" loading="lazy"/>
-      </a>
-
-      <div class="info">
-        <p class="info-item">
-          <b class="info-desc"><span >Likes</span> <span>${likes}</span></b>
-        </p>
-        <p class="info-item">
-          <b class="info-desc"><span >Views</span> <span >${views}</span></b>
-        </p>
-        <p class="info-item">
-          <b class="info-desc"><span >Comments</span> <span>${comments}</span></b>
-        </p>
-        <p class="info-item">
-          <b class="info-desc"><span >Downloads</span> <span>${downloads}</span></b>
-        </p>
-      </div>
-     
-    </div>`
-    )
-    .join('');
-}
-
+/**
+  |============================
+  | Other functions
+  |============================
+*/
 function clearNewsList() {
   gallery.innerHTML = '';
 }
@@ -152,8 +135,11 @@ function smoothScrollToNextCards() {
     behavior: 'smooth',
   });
 }
-
-// -----------scroll---------------------------------------------------------- //
+/**
+  |============================
+  |           SCROLL
+  |============================
+*/
 // window.addEventListener('scroll', handleScroll);
 // function handleScroll() {
 //   const { clientHeight, scrollTop, scrollHeight } = document.documentElement;
