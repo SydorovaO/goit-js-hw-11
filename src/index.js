@@ -1,4 +1,3 @@
-import axios from 'axios';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
@@ -14,12 +13,11 @@ const loadMoreBtn = new LoadMoreBtn({
 const refs = {
   form: document.querySelector('#search-form'),
   gallery: document.querySelector('.gallery'),
-  loadMore: document.querySelector('.load-more'),
 };
-const { form, loadMore, gallery } = refs;
+const { form, gallery } = refs;
 
 form.addEventListener('submit', onSubmit);
-loadMore.addEventListener('click', onLoadMore);
+loadMoreBtn.button.addEventListener('click', onLoadMore);
 
 async function appendImages() {
   const currentPage = imagesAPIService.page;
@@ -42,6 +40,10 @@ async function appendImages() {
     console.log(hits);
     gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
     smoothScrollToNextCards();
+    new SimpleLightbox('.gallery a', {
+      captions: true,
+      captionDelay: 250,
+    });
   } catch (err) {
     onError(err);
   }
@@ -87,8 +89,9 @@ function createMarkup(arr) {
       
       <div class="photo-card">
       <a class="gallery__link" href="${largeImageURL}">
-      <img src="${webformatURL}" alt="${tags}" loading="lazy" width=350 height=197 />
+      <img src="${webformatURL}" alt="${tags}" loading="lazy"/>
       </a>
+      
       <div class="info">
         <p class="info-item">
           <b class="info-desc"><span >Likes</span> <span>${likes}</span></b>
@@ -110,7 +113,7 @@ function createMarkup(arr) {
     )
     .join('');
 }
-
+// width=350 height=197
 function clearNewsList() {
   gallery.innerHTML = '';
 }
@@ -139,10 +142,6 @@ function smoothScrollToNextCards() {
   });
 }
 
-new SimpleLightbox('.gallery a', {
-  captions: true,
-  captionDelay: 250,
-});
 // -----------scroll---------------------------------------------------------- //
 // window.addEventListener('scroll', handleScroll);
 // function handleScroll() {
