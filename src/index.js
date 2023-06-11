@@ -29,7 +29,7 @@ buttonEl.textContent = '🔍';
 form.addEventListener('submit', onSubmit);
 loadMoreBtn.button.addEventListener('click', onLoadMore);
 
-let lightbox;
+let lightbox = null;
 /**
   |============================
   | function appendImages
@@ -54,26 +54,22 @@ async function appendImages() {
     }
 
     gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
-    smoothScrollToNextCards();
-
-    lightbox = new SimpleLightbox('.gallery a', {
-      captions: true,
-      captionDelay: 250,
-    });
+    checkingLightbox();
   } catch (err) {
     onError(err);
   }
   loadMoreBtn.enable();
 }
-
 /**
   |============================
   | function onLoadMore
   |============================
 */
+
 function onLoadMore() {
   loadMoreBtn.disable();
   appendImages();
+  smoothScrollToNextCards();
   lightbox.refresh();
 }
 
@@ -106,6 +102,17 @@ function onSubmit(e) {
   | Other functions
   |============================
 */
+function checkingLightbox() {
+  if (!lightbox) {
+    lightbox = new SimpleLightbox('.gallery a', {
+      captions: true,
+      captionDelay: 250,
+    });
+  } else {
+    lightbox.refresh();
+  }
+}
+
 function clearNewsList() {
   gallery.innerHTML = '';
 }
