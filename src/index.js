@@ -1,7 +1,6 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
-
 import ImagesAPIService from './js/ImagesAPIService';
 import LoadMoreBtn from './components/loadMoreBtn';
 
@@ -13,12 +12,22 @@ const loadMoreBtn = new LoadMoreBtn({
 const refs = {
   form: document.querySelector('#search-form'),
   gallery: document.querySelector('.gallery'),
+  buttonEl: document.querySelector("button[type='submit']"),
 };
-const { form, gallery } = refs;
+const { form, gallery, buttonEl } = refs;
+
+const container = document.createElement('div');
+container.className = 'search-container';
+while (form.firstChild) {
+  container.appendChild(form.firstChild);
+}
+form.appendChild(container);
+
+buttonEl.textContent = '🔍';
 
 form.addEventListener('submit', onSubmit);
 loadMoreBtn.button.addEventListener('click', onLoadMore);
-
+let lightbox;
 async function appendImages() {
   const currentPage = imagesAPIService.page;
   console.log(currentPage);
@@ -40,7 +49,7 @@ async function appendImages() {
     console.log(hits);
     gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
     smoothScrollToNextCards();
-    new SimpleLightbox('.gallery a', {
+    lightbox = new SimpleLightbox('.gallery a', {
       captions: true,
       captionDelay: 250,
     });
@@ -53,7 +62,7 @@ async function appendImages() {
 function onLoadMore() {
   loadMoreBtn.disable();
   appendImages();
-  gallery.refresh();
+  lightbox.refresh();
 }
 
 function onSubmit(e) {
@@ -143,10 +152,10 @@ function smoothScrollToNextCards() {
 }
 
 // -----------scroll---------------------------------------------------------- //
-window.addEventListener('scroll', handleScroll);
-function handleScroll() {
-  const { clientHeight, scrollTop, scrollHeight } = document.documentElement;
-  if (scrollTop + clientHeight >= scrollHeight - 5) {
-    appendImages();
-  }
-}
+// window.addEventListener('scroll', handleScroll);
+// function handleScroll() {
+//   const { clientHeight, scrollTop, scrollHeight } = document.documentElement;
+//   if (scrollTop + clientHeight >= scrollHeight - 5) {
+//     appendImages();
+//   }
+// }

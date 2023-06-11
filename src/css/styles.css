@@ -76,16 +76,18 @@ button[type='submit'] {
   background-color: rgb(87, 83, 158);
 }
 .search-form input {
-  border-radius: 4px;
+  width: 300px;
   padding: 10px;
 }
 
 .search-form button {
+  position: absolute;
+  top: 2px;
+  right: 1px;
   border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 4px;
+  font-size: 25px;
+  background-color: #ffffff;
+}
+.search-container {
+  position: relative;
 }
