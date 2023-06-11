@@ -9,6 +9,7 @@ const loadMoreBtn = new LoadMoreBtn({
   selector: '.load-more',
   isHidden: true,
 });
+
 const refs = {
   form: document.querySelector('#search-form'),
   gallery: document.querySelector('.gallery'),
@@ -22,33 +23,33 @@ while (form.firstChild) {
   container.appendChild(form.firstChild);
 }
 form.appendChild(container);
-
 buttonEl.textContent = '🔍';
 
 form.addEventListener('submit', onSubmit);
 loadMoreBtn.button.addEventListener('click', onLoadMore);
+
 let lightbox;
 async function appendImages() {
   const currentPage = imagesAPIService.page;
-  console.log(currentPage);
+
   try {
     const { hits, totalHits } = await imagesAPIService.getImages();
-
     if (hits.length === 0) {
       onInvalidInput();
     }
     if (currentPage === 1) {
       Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
     }
+
     const nextPage = imagesAPIService.page;
     const maxPage = Math.ceil(totalHits / 100);
-    console.log(maxPage);
     if (nextPage > maxPage) {
       loadMoreBtn.hide();
     }
-    console.log(hits);
+
     gallery.insertAdjacentHTML('beforeend', createMarkup(hits));
     smoothScrollToNextCards();
+
     lightbox = new SimpleLightbox('.gallery a', {
       captions: true,
       captionDelay: 250,
@@ -73,6 +74,7 @@ function onSubmit(e) {
     Notiflix.Notify.warning('Empty query');
     return;
   }
+
   clearNewsList();
   imagesAPIService.setSearchValue(inputValue);
   loadMoreBtn.show();
@@ -116,21 +118,21 @@ function createMarkup(arr) {
         </p>
       </div>
      
-    </div>
-    
-          `
+    </div>`
     )
     .join('');
 }
-// width=350 height=197
+
 function clearNewsList() {
   gallery.innerHTML = '';
 }
+
 function onError(err) {
-  console.error(' This is err!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+  console.error(err);
   clearNewsList();
   loadMoreBtn.hide();
 }
+
 function onInvalidInput() {
   throw new Error(
     Notiflix.Notify.failure(

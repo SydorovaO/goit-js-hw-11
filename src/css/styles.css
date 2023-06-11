@@ -36,37 +36,6 @@ button:disabled {
 button.hidden {
   display: none;
 }
-
-/* .search-form {
-  display: flex;
-  position: sticky;
-  top: 0;
-  left: 0;
-  background-color: aquamarine;
-}
-input[name='searchQuery'] {
-  position: relative;
-}
-button[type='submit'] {
-  position: absolute;
-} */
-/* .search-form {
-  position: sticky;
-  top: 0;
-  left: 0;
-  background-color: aquamarine;
-  display: inline-flex;
-}
-
-.search-form input {
-}
-
-.search-form button {
-  position: absolute;
-  right: 0;
-  top: 0;
-} */
-
 .search-form {
   display: flex;
   justify-content: center;
