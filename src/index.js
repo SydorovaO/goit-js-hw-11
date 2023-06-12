@@ -48,7 +48,7 @@ async function appendImages() {
     }
 
     const nextPage = imagesAPIService.page;
-    const maxPage = Math.ceil(totalHits / 100);
+    const maxPage = Math.ceil(totalHits / 40);
     if (nextPage > maxPage) {
       loadMoreBtn.hide();
     }
